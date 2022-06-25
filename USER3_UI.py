@@ -1,19 +1,11 @@
 import USER2_UI
 import USER4_UI
 import pandas as pd
-from PIL import Image,ImageTk
 import csv
 from tkinter import *
 from tkinter import ttk
 from tkinter.simpledialog import *
 def USER_1():
-    def create_button(button_name,color,text,width,x,y):                   # 버튼 배치 함수
-        button_name = Button(mainwindow,bg=color,text=text,width=width)
-        button_name.place(x=x, y = y)
-        return button_name
-
-    def create_label(label_name,x,y):                                       # 라벨 배치 함수
-        label_name.place(x=x, y = y)
 
     def create_entry(entry_name,text,font,width,x,y):                             # 엔트리 배치 함수
         entry_name = Entry(mainwindow,font=font,width=width)
@@ -32,11 +24,11 @@ def USER_1():
         phone=None
         
         csv_list = []
-        f = open('csv/USER1.csv','r',encoding='utf-8')
+        f = open('csv/user.csv','r',encoding='utf-8')
         reader = csv.reader(f)
 
         def user_search ():   
-            df_user = pd.read_csv('csv/USER1.csv', encoding='utf-8')
+            df_user = pd.read_csv('csv/user.csv', encoding='utf-8')
             df_user = df_user.set_index(df_user['USER_PHONE'])
             
             for phone in df_user.index.tolist():
@@ -94,8 +86,9 @@ def USER_1():
             treeview.insert('','end',values=[b,a,c,d,h],iid=a)
         
 
-        #csv_list[a]
-
+        
+        reg_info = Label(mainwindow,fg='black',text='※ 탈퇴/복구는 상세정보에서 가능합니다 ※',width=40)
+        reg_info.place(x=30, y = 450)
         search_button = Button(mainwindow,bg='gray',text='검색',width=9,command=user_search)
         search_button.place(x=560, y = 80)
         update_button = Button(mainwindow,bg='gray',text='수정',width=9,command=button_item)
@@ -122,8 +115,12 @@ def USER_1():
         sub_label.pack(fill=X)
 
     mainwindow = Tk()
+    global a
+    a = mainwindow
     mainwindow.title("회원 검색/수정/탈퇴")
     mainwindow.geometry("700x500")
     user_search()
     mainwindow.resizable(width=FALSE, height=FALSE)
     mainwindow.mainloop()
+def exit_search():
+    a.destroy()
